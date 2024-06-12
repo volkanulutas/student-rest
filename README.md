@@ -3,7 +3,7 @@
 
 ## Quick access and test
 
-[Student REST API Swagger 3 Documentation]([https://www.google.com](https://student-rest.onrender.com/swagger-ui/index.html)
+[Student REST API Swagger 3 Documentation]([https://www.google.com](https://student-rest.onrender.com/swagger-ui/index.html))
 
 ## Overview
 Student-rest API is a simple RESTful service for managing students, developed using Spring framework. The API supports basic CRUD operations.
