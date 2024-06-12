@@ -2,10 +2,7 @@
 #### Spring REST API Example with Swagger 3 and render.com Deployment.
 
 ## Quick access and test
-
-```curl
-https://student-rest.onrender.com/swagger-ui/index.html
-```
+[https://student-rest.onrender.com/swagger-ui/index.html(https://student-rest.onrender.com/swagger-ui/index.html)
 
 ## Overview
 Student-rest API is a simple RESTful service for managing students, developed using Spring framework. The API supports basic CRUD operations.
