@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1/student")
@@ -96,6 +98,19 @@ public class StudentController {
             return ResponseEntity.ok().build();
         } catch (ResourceNotFoundException ex) {
             return ResponseEntity.notFound().build();
+        } catch (Exception ex) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @Operation(summary = "Add all the student list.", description = "Appending all new student list into system.")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Successfully created.")})
+    @PostMapping("/")
+    public ResponseEntity<?> addAll(
+            @RequestBody @Parameter(name = "List of Students.", description = "List of Students.", example = SwaggerConstant.STUDENT_LIST_EXAMPLE)
+            List<Student> newStudentList) {
+        try {
+            return ResponseEntity.ok(studentService.addAll(newStudentList));
         } catch (Exception ex) {
             return ResponseEntity.internalServerError().build();
         }

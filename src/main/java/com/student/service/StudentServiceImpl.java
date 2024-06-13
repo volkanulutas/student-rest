@@ -47,6 +47,12 @@ public class StudentServiceImpl implements StudentService {
         }
     }
 
+    @Override
+    public List<Student> addAll(List<Student> newStudents) {
+        studentList.addAll(newStudents);
+        return newStudents;
+    }
+
     private Student find(Long id) {
         for (Student student : studentList) {
             if (student.getId() == id) {
