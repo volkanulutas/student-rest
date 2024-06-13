@@ -105,12 +105,24 @@ public class StudentController {
 
     @Operation(summary = "Add all the student list.", description = "Appending all new student list into system.")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Successfully created.")})
-    @PostMapping("/")
+    @PostMapping("/all")
     public ResponseEntity<?> addAll(
             @RequestBody @Parameter(name = "List of Students.", description = "List of Students.", example = SwaggerConstant.STUDENT_LIST_EXAMPLE)
             List<Student> newStudentList) {
         try {
             return ResponseEntity.ok(studentService.addAll(newStudentList));
+        } catch (Exception ex) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @Operation(summary = "Clear student list.", description = "Clear student list")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Successfully cleaned.")})
+    @PostMapping("/clear")
+    public ResponseEntity<?> clearAll() {
+        try {
+            studentService.clearAll();
+            return ResponseEntity.ok().build();
         } catch (Exception ex) {
             return ResponseEntity.internalServerError().build();
         }

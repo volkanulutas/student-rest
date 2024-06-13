@@ -53,6 +53,11 @@ public class StudentServiceImpl implements StudentService {
         return newStudents;
     }
 
+    @Override
+    public void clearAll() {
+        studentList.clear();
+    }
+
     private Student find(Long id) {
         for (Student student : studentList) {
             if (student.getId() == id) {
