@@ -118,7 +118,7 @@ public class StudentController {
 
     @Operation(summary = "Clear student list.", description = "Clear student list")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Successfully cleaned.")})
-    @PostMapping("/clear")
+    @DeleteMapping("/clear")
     public ResponseEntity<?> clearAll() {
         try {
             studentService.clearAll();
