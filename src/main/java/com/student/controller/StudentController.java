@@ -62,8 +62,7 @@ public class StudentController {
     }
 
     @Operation(summary = "Creates a new student", description = "Creates a new student.")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Successfully created."),
-            @ApiResponse(responseCode = "404", description = "Not found - The student was not found.")})
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Successfully created.")})
     @PostMapping("/")
     public ResponseEntity<?> createStudent(
             @RequestBody @Parameter(name = "Student", description = "student object.", example = SwaggerConstant.STUDENT_EXAMPLE) Student student) {
