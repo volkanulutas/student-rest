@@ -1,5 +1,6 @@
 package com.student.service;
 
+import com.student.exception.ResourceAlreadySavedException;
 import com.student.exception.ResourceNotFoundException;
 import com.student.model.Student;
 import org.springframework.stereotype.Service;
@@ -22,17 +23,27 @@ public class StudentServiceImpl implements StudentService {
         if (student != null) {
             return student;
         }
-        throw new ResourceNotFoundException(id + " is not found", "student-service");
+        throw new ResourceNotFoundException("Student with id= " + id + " is not found", "student-service");
     }
 
     @Override
-    public Student saveStudent(Student student) throws ResourceNotFoundException {
+    public Student createStudent(Student student) throws ResourceNotFoundException {
         Student found = find(student.getId());
         if (found == null) {
             studentList.add(student);
         } else {
-            found.setName(student.getName());
-            found.setGrade(student.getGrade());
+            throw new ResourceAlreadySavedException("Student with id= " + student.getId() + " is already saved.", "student-service");
+        }
+        return student;
+    }
+
+    @Override
+    public Student updateStudent(Student student) throws ResourceNotFoundException {
+        Student found = find(student.getId());
+        if (found == null) {
+            throw new ResourceAlreadySavedException("Student with id= " + student.getId() + " is not found.", "student-service");
+        } else {
+            studentList.add(student);
         }
         return student;
     }

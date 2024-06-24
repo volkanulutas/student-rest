@@ -1,5 +1,6 @@
 package com.student.service;
 
+import com.student.exception.ResourceAlreadySavedException;
 import com.student.exception.ResourceNotFoundException;
 import com.student.model.Student;
 
@@ -10,7 +11,9 @@ public interface StudentService {
 
     Student getStudentById(Long id) throws ResourceNotFoundException;
 
-    Student saveStudent(Student student) throws ResourceNotFoundException ;
+    Student createStudent(Student student) throws ResourceAlreadySavedException;
+
+    Student updateStudent(Student student) throws ResourceNotFoundException;
 
     void deleteStudent(Long id);
 

@@ -1,6 +1,7 @@
 package com.student.controller;
 
 import com.student.config.SwaggerConstant;
+import com.student.exception.ResourceAlreadySavedException;
 import com.student.exception.ResourceNotFoundException;
 import com.student.model.Student;
 import com.student.service.StudentService;
@@ -10,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -62,25 +64,30 @@ public class StudentController {
     }
 
     @Operation(summary = "Creates a new student", description = "Creates a new student.")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Successfully created.")})
+    @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Successfully created."),
+            @ApiResponse(responseCode = "404", description = "Creation of student is failed. Student has already saved before.")})
     @PostMapping("/")
     public ResponseEntity<?> createStudent(
             @RequestBody @Parameter(name = "Student", description = "student object.", example = SwaggerConstant.STUDENT_EXAMPLE) Student student) {
         try {
-            return ResponseEntity.ok(studentService.saveStudent(student));
+            return new ResponseEntity<>(studentService.createStudent(student), HttpStatus.CREATED);
+        } catch (ResourceAlreadySavedException ex) {
+            return ResponseEntity.badRequest().build();
         } catch (Exception ex) {
             return ResponseEntity.internalServerError().build();
         }
     }
 
     @Operation(summary = "Updates a new student", description = "Updates a new student. When the given id is not found, return HTTP 404.")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Successfully updated."),
+    @ApiResponses(value = {@ApiResponse(responseCode = "204", description = "Successfully updated."),
             @ApiResponse(responseCode = "404", description = "Not found - The student was not found.")})
     @PatchMapping("/")
     public ResponseEntity<?> updateStudent(
             @Parameter(name = "Student", description = "student object.", example = SwaggerConstant.STUDENT_EXAMPLE) Student student) {
         try {
-            return ResponseEntity.ok(studentService.saveStudent(student));
+            return new ResponseEntity<>(studentService.updateStudent(student), HttpStatus.NO_CONTENT);
+        } catch (ResourceNotFoundException ex) {
+            return ResponseEntity.notFound().build();
         } catch (Exception ex) {
             return ResponseEntity.internalServerError().build();
         }
